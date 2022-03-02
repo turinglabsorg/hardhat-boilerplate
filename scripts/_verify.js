@@ -16,12 +16,21 @@ async function run() {
             configs.network !== undefined &&
             configs.owner_mnemonic !== undefined
         ) {
+            let arguments = ""
+            for (let k in configs.constructor_arguments) {
+                if(k > 0){
+                    arguments += ","
+                }
+                arguments += '"' + configs.constructor_arguments[k] + '"'
+            }
+            fs.writeFileSync('./artifacts/arguments.js', `module.exports = [` + arguments + `]`)
             child_process.execSync(
+                'ETHERSCAN="' + configs.etherscan_key + '" ' +
                 'POLYGONSCAN="' + configs.polygonscan_key + '" ' +
                 'PROVIDER="' + configs.provider + '" ' +
                 'npx hardhat verify --show-stack-traces --network ' + configs.network +
                 ' ' + configs.contract_address +
-                ' ' + configs.constructor_arguments, { stdio: 'inherit' }
+                ' --constructor-args ./artifacts/arguments.js', { stdio: 'inherit' }
             )
             console.log('All done, exiting!')
             process.exit();
