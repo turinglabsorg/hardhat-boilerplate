@@ -5,7 +5,12 @@ let provider = 'http://localhost:8545'
 let hardhatConfigs = {
   defaultNetwork: "hardhat",
   networks: {
-    hardhat: {},
+    hardhat: {
+      mining: {
+        auto: true,
+        interval: 3000
+      }
+    },
     rinkeby: {
       url: provider
     },
@@ -16,7 +21,7 @@ let hardhatConfigs = {
       url: provider
     }
   },
-  solidity: "0.8.6",
+  solidity: "0.8.19",
 }
 
 if (process.env.ACCOUNTS !== undefined) {
@@ -50,5 +55,21 @@ if (process.env.POLYGONSCAN !== undefined && process.env.POLYGONSCAN !== '') {
 if (process.env.ETHERSCAN !== undefined && process.env.ETHERSCAN !== '') {
   hardhatConfigs.etherscan = { apiKey: { mainnet: process.env.ETHERSCAN, rinkeby: process.env.ETHERSCAN, ropsten: process.env.ETHERSCAN, goerli: process.env.ETHERSCAN } }
 }
-
+if (process.env.NETWORK === 'hardhat' || process.env.NETWORK === 'localhost') {
+  hardhatConfigs.etherscan = {
+    apiKey: {
+      hardhat: "abc"
+    },
+    customChains: [
+      {
+        network: "hardhat",
+        chainId: 31337,
+        urls: {
+          apiURL: "http://localhost/api",
+          browserURL: "http://localhost/api"
+        }
+      }
+    ]
+  }
+}
 module.exports = hardhatConfigs;

@@ -28,6 +28,7 @@ async function run() {
                 'ETHERSCAN="' + configs.etherscan_key + '" ' +
                 'POLYGONSCAN="' + configs.polygonscan_key + '" ' +
                 'PROVIDER="' + configs.provider + '" ' +
+                'NETWORK="' + configs.network + '" ' +
                 'npx hardhat verify --show-stack-traces --network ' + configs.network +
                 ' ' + configs.contract_address +
                 ' --constructor-args ./artifacts/arguments.js', { stdio: 'inherit' }

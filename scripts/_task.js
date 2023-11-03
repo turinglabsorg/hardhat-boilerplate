@@ -42,5 +42,5 @@ if (argv._ !== undefined && argv._.length == 2) {
         console.log('Can\'t find task: ' + './scripts/' + argv._[0] + '.js')
     }
 } else {
-    console.log('Can\'r run task, please use script like `yarn task deploy localhost`.')
+    console.log('Can\'r run task, please use script like `yarn task deploy hardhat`.')
 }
